@@ -1,0 +1,15 @@
+#include <iostream>
+#include "FrontEnd/LogInWindow/LogInWindow.h"
+#include <QWidget>
+#include <QApplication>
+
+int main(int argc,char *argv[]) {
+    QApplication app(argc,argv);
+
+    LogInWindow liw;
+
+    QWidget* window = liw.logInWindow();
+    window->show();
+    return app.exec();
+}
+
