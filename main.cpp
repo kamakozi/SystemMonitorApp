@@ -5,6 +5,8 @@
 #include "BackEnd/Tables/ReadSqlTables.h"
 
 int main(int argc,char *argv[]) {
+    ReadSqlTables rsq;
+    rsq.readSqlFile();
 
     QApplication app(argc,argv);
 

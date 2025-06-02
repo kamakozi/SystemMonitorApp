@@ -5,19 +5,15 @@
 #include "LogInWindow.h"
 #include <QWidget>
 #include <QBoxLayout>
-#include <QPushButton>
+#include <QObject>
 #include <QLineEdit>
 #include <QLabel>
-#include "../../BackEnd/Tables/ReadSqlTables.h"
-#include <iostream>
+
+#include "../RegisterWindow/RegisterWindow.h"
+#include <QPushButton>
 
 QWidget *LogInWindow::logInWindow() {
-    try{
-    ReadSqlTables rsq;
-    rsq.readSqlFile();
-    }catch (std::exception& e) {
-        std::cerr << "Load failed at the start for tables" << e.what() <<std::endl;
-    }
+
     QWidget* window = new QWidget;
     window->resize(850,560);
     window->setWindowTitle("System monitor app");
@@ -44,6 +40,14 @@ QWidget *LogInWindow::logInWindow() {
     box_layout->addWidget(loginButton);
     box_layout->addWidget(noAcc);
     box_layout->addWidget(registerButton);
+
+   QObject::connect(registerButton,&QPushButton::clicked,[=] {
+       RegisterWindow rw;
+       QWidget* regWindow = rw.registerWindow();
+       regWindow->show();
+       window->close();
+
+   });
 
     window->setLayout(box_layout);
     window->show();
