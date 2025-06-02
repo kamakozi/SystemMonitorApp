@@ -8,8 +8,16 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
+#include "../../BackEnd/Tables/ReadSqlTables.h"
+#include <iostream>
 
 QWidget *LogInWindow::logInWindow() {
+    try{
+    ReadSqlTables rsq;
+    rsq.readSqlFile();
+    }catch (std::exception& e) {
+        std::cerr << "Load failed at the start for tables" << e.what() <<std::endl;
+    }
     QWidget* window = new QWidget;
     window->resize(850,560);
     window->setWindowTitle("System monitor app");

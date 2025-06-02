@@ -2,8 +2,10 @@
 #include "FrontEnd/LogInWindow/LogInWindow.h"
 #include <QWidget>
 #include <QApplication>
+#include "BackEnd/Tables/ReadSqlTables.h"
 
 int main(int argc,char *argv[]) {
+
     QApplication app(argc,argv);
 
     LogInWindow liw;
