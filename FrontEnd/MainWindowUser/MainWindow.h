@@ -5,7 +5,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QWidget>
-
+#include "../../BackEnd/Auth/User.h"
 
 class User;
 
