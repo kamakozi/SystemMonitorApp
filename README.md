@@ -1,5 +1,15 @@
 # System Monitor App
 
+
+<p align="center">
+  <img src="screenshots/cpuusage.png" width="600"/>
+  <img src="screenshots/loginscreen.png" width="600"/>
+  <img src="screenshots/mainwindow.png" width="600"/>
+  
+</p>
+
+
+
 A modern C++ Qt6-based desktop application that monitors and displays real-time **system information** such as CPU usage, memory consumption, and running processes — designed with a clean UI and modular backend.
 
 > In development – stay tuned for updates!
