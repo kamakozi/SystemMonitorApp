@@ -35,6 +35,8 @@ add_executable(SystemMonitorApp main.cpp
                 FrontEnd/LogInWindow/LogInWindow.h
                 FrontEnd/RegisterWindow/RegisterWindow.cpp
                 FrontEnd/RegisterWindow/RegisterWindow.h
+                FrontEnd/MainWindowUser/MainWindow.h
+                FrontEnd/MainWindowUser/MainWindow.cpp
                 BackEnd/Tables/ReadSqlTables.cpp
                 BackEnd/Tables/ReadSqlTables.h
                 BackEnd/PQXXConnection/ReadEnvFile/ReadEnvFile.h
@@ -44,7 +46,12 @@ add_executable(SystemMonitorApp main.cpp
                 BackEnd/Auth/Register/Register.cpp
                 BackEnd/Auth/Register/Register.h
                 BackEnd/Auth/Register/BCrypt.hpp
-                BackEnd/Auth/Register/bcrypt.h)
+                BackEnd/Auth/Register/bcrypt.h
+                BackEnd/Auth/Login/Login.cpp
+                BackEnd/Auth/Login/Login.h
+                BackEnd/Auth/Login/bcrypt.h
+                BackEnd/Auth/Login/BCrypt.hpp)
+
 
 
 

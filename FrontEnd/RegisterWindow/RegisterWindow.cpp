@@ -34,10 +34,10 @@ QWidget* RegisterWindow::registerWindow() {
     QBoxLayout* box_layout = new QBoxLayout(QBoxLayout::TopToBottom);
     box_layout->addWidget(usernameLabel);
     box_layout->addWidget(usernameEdit);
-    box_layout->addWidget(passwordLabel);
-    box_layout->addWidget(passwordEdit);
     box_layout->addWidget(emailLabel);
     box_layout->addWidget(emailEdit);
+    box_layout->addWidget(passwordLabel);
+    box_layout->addWidget(passwordEdit);
     box_layout->addWidget(registerButton);
     box_layout->addWidget(loginButton);
 
@@ -45,6 +45,18 @@ QWidget* RegisterWindow::registerWindow() {
         QString username = usernameEdit->text();
         QString password = passwordEdit->text();
         QString email = emailEdit->text();
+
+        if (!email.contains("@") && !email.contains(".")) {
+            QMessageBox::information(window,"Invalid email!","Email you entered is invalid");
+            return;
+        }
+
+        if (password.length() < 6) {
+            QMessageBox::information(window,"Weak password", "Password must be at least 6 characters long");
+            return;
+        }
+
+
 
         qDebug() << "Username: " << username;
         qDebug() << "Password: " << password;
@@ -59,6 +71,8 @@ QWidget* RegisterWindow::registerWindow() {
             QWidget* logInWindow = liw.logInWindow();
             logInWindow->show();
             window->close();
+        }else {
+            QMessageBox::critical(window,"Unable to register user","Username already taken or there is an network error");
         }
     });
 

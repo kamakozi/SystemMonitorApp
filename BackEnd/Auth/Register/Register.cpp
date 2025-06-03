@@ -38,7 +38,6 @@ bool Register::registerUser(QString username,QString password, QString email) {
         nxt.commit();
 
     std::cout << "User successfully created!" << std::endl;
-
     }catch (std::exception& e) {
         std::cerr << "Unable to insert new user into the database!" << std::endl;
     }
