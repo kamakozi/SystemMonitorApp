@@ -7,12 +7,12 @@
 #include <QString>
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
+#include "CpuUsageWidget/CpuUsage.h"
 
 QWidget* MainWindow::mainWindow(const User& user) {
     QWidget* window = new QWidget;
     window->resize(850, 650);
     window->setWindowTitle("System Monitor App");
-
 
     QString modernDarkStyle = R"(
         QWidget {
@@ -24,8 +24,9 @@ QWidget* MainWindow::mainWindow(const User& user) {
             background-color: #29293d;
             border: 1px solid #444;
             border-radius: 10px;
-            padding: 10px 20px;
+            padding: 10px;
             color: white;
+            text-align: left;
         }
         QPushButton:hover {
             background-color: #3c3c5c;
@@ -37,8 +38,8 @@ QWidget* MainWindow::mainWindow(const User& user) {
     window->setStyleSheet(modernDarkStyle);
 
 
-    QPushButton* homeBtn = new QPushButton("🏠 Home");
-    QPushButton* usageBtn = new QPushButton("📊 Usages");
+    QPushButton* homeBtn = new QPushButton("Home");
+    QPushButton* usageBtn = new QPushButton("Usages");
 
     QHBoxLayout* navLayout = new QHBoxLayout;
     navLayout->addStretch();
@@ -49,19 +50,49 @@ QWidget* MainWindow::mainWindow(const User& user) {
 
     QStackedWidget* stackedWidget = new QStackedWidget;
 
-    QLabel* homePage = new QLabel("👤 Logged in as: <b>" + QString::fromStdString(user.getName()) + "</b>");
+    QLabel* homePage = new QLabel("Logged in as: <b>" + QString::fromStdString(user.getName()) + "</b>");
     homePage->setAlignment(Qt::AlignCenter);
 
-    QLabel* usagePage = new QLabel("📈 Usage statistics will be displayed here...");
-    usagePage->setAlignment(Qt::AlignCenter);
+
+    QWidget* usagePage = new QWidget;
+    QHBoxLayout* usageLayout = new QHBoxLayout(usagePage);
+
+
+    QVBoxLayout* leftMenuLayout = new QVBoxLayout;
+    QPushButton* cpuBtn = new QPushButton("CPU");
+    QPushButton* gpuBtn = new QPushButton("GPU");
+    QPushButton* ramBtn = new QPushButton("RAM");
+    QPushButton* netBtn = new QPushButton("Internet");
+
+    leftMenuLayout->addWidget(cpuBtn);
+    leftMenuLayout->addWidget(gpuBtn);
+    leftMenuLayout->addWidget(ramBtn);
+    leftMenuLayout->addWidget(netBtn);
+    leftMenuLayout->addStretch();
+
+    QStackedWidget* graphStack = new QStackedWidget;
+    CpuUsage* cpuWidget = new CpuUsage;
+    QWidget* gpuWidget = new QLabel("GPU Usage");
+    QWidget* ramWidget = new QLabel("RAM Usage");
+    QWidget* netWidget = new QLabel("Internet Usage");
+
+    graphStack->addWidget(cpuWidget);
+    graphStack->addWidget(gpuWidget);
+    graphStack->addWidget(ramWidget);
+    graphStack->addWidget(netWidget);
+
+    usageLayout->addLayout(leftMenuLayout);
+    usageLayout->addWidget(graphStack);
+
 
     stackedWidget->addWidget(homePage);
     stackedWidget->addWidget(usagePage);
 
-    // 🧱 Main layout
+
     QVBoxLayout* mainLayout = new QVBoxLayout(window);
     mainLayout->addLayout(navLayout);
     mainLayout->addWidget(stackedWidget);
+
 
     auto fadeSwitch = [=](int index) {
         QWidget* current = stackedWidget->currentWidget();
@@ -98,6 +129,19 @@ QWidget* MainWindow::mainWindow(const User& user) {
 
     QObject::connect(usageBtn, &QPushButton::clicked, [=]() {
         fadeSwitch(1);
+    });
+
+    QObject::connect(cpuBtn, &QPushButton::clicked, [=]() {
+        graphStack->setCurrentIndex(0);
+    });
+    QObject::connect(gpuBtn, &QPushButton::clicked, [=]() {
+        graphStack->setCurrentIndex(1);
+    });
+    QObject::connect(ramBtn, &QPushButton::clicked, [=]() {
+        graphStack->setCurrentIndex(2);
+    });
+    QObject::connect(netBtn, &QPushButton::clicked, [=]() {
+        graphStack->setCurrentIndex(3);
     });
 
     window->setLayout(mainLayout);
