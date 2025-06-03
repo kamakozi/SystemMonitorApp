@@ -1,4 +1,3 @@
-
 # System Monitor App
 
 A modern C++ Qt6-based desktop application that monitors and displays real-time **system information** such as CPU usage, memory consumption, and running processes — designed with a clean UI and modular backend.
@@ -8,18 +7,27 @@ A modern C++ Qt6-based desktop application that monitors and displays real-time 
 
 ##  Features (Planned and In Progress)
 
-###  Current (Working)
-- Qt6 GUI skeleton with login/start window
-- Responsive layout using QBoxLayout
-- Modular class-based design (`LogInWindow`, `MainWindow`...)
+### Current (Working)
+- Qt6 GUI with login and register functionality
+- User system with secure registration & login (hashed passwords using **bcrypt**)
+- PostgreSQL database integration via **libpqxx**
+- Responsive layout using `QBoxLayout`
+- Modular design: `LoginWindow`, `RegisterWindow`, `MainWindow`, `User` class, etc.
+- Singleton-based DB connection with `.env` reader
+- Tables auto-load from SQL file (`Tables.sql`) on app start
 
-###  Coming Soon
-- Real-time CPU and memory usage visualization
-- Network statistics tracking
-- Running process list with kill/suspend actions
+### In Progress
+- Real-time system usage monitoring (CPU, RAM, GPU, Network)
+- Main window layout with sidebar buttons for switching graphs
+- Graph plotting per module (CPU, RAM, etc.) using separate widgets
+- Folder/module structure for each system section (`CPUWidget`, `RAMWidget`, ...)
+
+### Coming Soon
+- Running process list with kill/suspend buttons
 - Search/filter tasks
 - Dark/light theme toggle
-- User registration & license key checking system
+- License key checking (offline mode)
+- Session logging
 
 ---
 
@@ -28,7 +36,9 @@ A modern C++ Qt6-based desktop application that monitors and displays real-time 
 - **C++17**
 - **Qt6 Widgets**
 - **CMake**
-- (Planned) **System APIs** for:
+- **PostgreSQL + libpqxx**
+- **bcrypt** (C++ header-only version)
+- (Planned) System APIs for:
   - macOS: `sysctl`, `task_info`, etc.
   - Linux: `/proc`, `sysinfo`, etc.
 
@@ -39,7 +49,7 @@ A modern C++ Qt6-based desktop application that monitors and displays real-time 
 ### 1. Install Dependencies (macOS example)
 
 ```bash
-brew install qt cmake
+brew install qt cmake libpqxx openssl
 ```
 
 ### 2. Build the project
@@ -47,16 +57,34 @@ brew install qt cmake
 ```bash
 cmake -B build -S .
 cmake --build build
-./build/YourExecutableName
+./build/SystemMonitorApp
 ```
 
 ### 3. Optional: Run with Admin Privileges (for full access to system info)
 
 ```bash
-sudo ./build/YourExecutableName
+sudo ./build/SystemMonitorApp
 ```
 
 ---
+
+## Project Structure
+
+```
+SystemMonitorApp/
+├── FrontEnd/
+│   ├── LogInWindow/
+│   ├── RegisterWindow/
+│   ├── MainWindowUser/
+│   ├── CPU/ (planned)
+│   ├── RAM/ (planned)
+│   └── ...
+├── BackEnd/
+│   ├── Auth/ (Login, Register, User, bcrypt)
+│   ├── Tables/ (SQL loader)
+│   └── PQXXConnection/ (singleton + env reader)
+└── CMakeLists.txt
+```
 
 ---
 
@@ -71,3 +99,4 @@ sudo ./build/YourExecutableName
 
 ---
 
+_Last updated: 03.06.2025_
